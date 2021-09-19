@@ -1,16 +1,11 @@
-import { useRef } from "react"
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Suspense, useRef } from "react"
+import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Physics, useBox, usePlane } from '@react-three/cannon'
 import './App.css';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
-const gltfLoader = new GLTFLoader
-
-// The sheep
-gltfLoader.load('character.gltf', (gltf) => {
-  scene.add(gltf.scene)
-} )
+import Model from './sheep'
 
 
 function Box(props) {
@@ -36,11 +31,12 @@ function Plane(props) {
   )
 }
 
-// Sheep
-gltfLoader.load('')
 
 // main entry point
 function App() {
+
+  // const gltf = useLoader(GLTFLoader, '../../static/character.gltf')
+
   return (
     <Canvas>
       <OrbitControls />
@@ -53,6 +49,9 @@ function App() {
         <Box position={[-2, 2, 0]} color="red" shininess="100" args={[2, 2, 2]} />
         <Box position={[2, 2, 0]} color="blue" shininess="100" args={[1, 1, 1]} />
         <Box position={[4, 1, -10]} color="teal" shininess="100" args={[4, 4, 4]} />
+        <Suspense fallback={null}>
+          <Model />
+        </Suspense>
         <Plane />
       </Physics>
 
