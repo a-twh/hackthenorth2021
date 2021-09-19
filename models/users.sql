@@ -12,7 +12,5 @@ CREATE TABLE Users (
     email varchar NOT NULL UNIQUE,
     "name" varchar NOT NULL,
     "password" varchar NOT NULL,
-    high_score NUMERIC,
-    
-    balance INT8
+    high_score NUMERIC
 );
