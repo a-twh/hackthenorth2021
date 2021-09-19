@@ -3,6 +3,14 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Physics, useBox, usePlane } from '@react-three/cannon'
 import './App.css';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+
+const gltfLoader = new GLTFLoader
+
+// The sheep
+gltfLoader.load('character.gltf', (gltf) => {
+  scene.add(gltf.scene)
+} )
 
 
 function Box(props) {
@@ -28,6 +36,9 @@ function Plane(props) {
   )
 }
 
+// Sheep
+gltfLoader.load('')
+
 // main entry point
 function App() {
   return (
@@ -44,7 +55,6 @@ function App() {
         <Box position={[4, 1, -10]} color="teal" shininess="100" args={[4, 4, 4]} />
         <Plane />
       </Physics>
-
 
     </Canvas>
   );
