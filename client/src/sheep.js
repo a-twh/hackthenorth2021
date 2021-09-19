@@ -1,11 +1,26 @@
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
+import { useKeyboardControls } from "./hooks/useKeyboaradControls"
+import { useBox } from '@react-three/cannon'
+
 
 export default function Model(props) {
-  const group = useRef()
+  const SPEED = 25
+  const [ref, api] = useBox(() => ({mass: 2201, position: props.position, args: props.args}))
+  const {
+    moveForward,
+    moveLeft,
+    moveBack,
+    moveRight,
+    jump
+  } = useKeyboardControls()
+  const forward_vel = (moveForward ? 1 : 0) - (moveBack ? 1 : 0)
+  const sideways_vel = (moveRight ? 1 : 0) - (moveLeft ? 1 : 0)
+  api.velocity.set( forward_vel * SPEED,0,sideways_vel * SPEED)
+
   const { nodes, materials } = useGLTF('/character.gltf')
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={ref} {...props} dispose={null}>
       <mesh
         castShadow
         receiveShadow
